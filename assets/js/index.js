@@ -52,6 +52,13 @@ const render = t => {
         tdTexo.innerText = tarefa.texto;
         row.appendChild(tdTexo);
 
+        // Criar td de prioridade
+        let tdPrioridade = document.createElement('td');
+        if (tarefa.prioridade == 3) tdPrioridade.innerText = '[alta]'
+        if (tarefa.prioridade == 2) tdPrioridade.innerText = '[média]'
+        if (tarefa.prioridade == 1) tdPrioridade.innerText = '[baixa]'
+        row.appendChild(tdPrioridade);
+
         // Criar td de ações
         let tdAcoes = document.createElement('td');
         let i = document.createElement('i');
