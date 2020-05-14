@@ -32,7 +32,8 @@ aside p{
 main {
 	background-color: #9c4dcc;
 	padding: 20px;
-	width: 400px;;
+	width: 400px;
+	margin: 0 auto;
 }
 
 form{

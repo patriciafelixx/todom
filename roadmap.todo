@@ -1,22 +1,22 @@
-☐ Criar um arquivo assets/js/index.js
-☐ Criar nesse arquivo um array (tarefas)
+✔ Criar um arquivo assets/js/index.js @done
+✔ Criar nesse arquivo um array (tarefas) @done
   Esse array deve conter objetos literais com os campos
     . id: numérico
     . texto: string
     . prioridade: numerico
     . feito: booleano
 
-☐ Linkar index.js ao index.html
-☐ Fazer uma função render(t)
+✔ Linkar index.js ao index.html @done
+✔ Fazer uma função render(t) @done
   Essa função deve receber como parâmetro um array
   de tarefas t e exibir na página as tarefas que
   estão no array t
   
-☐ Criar a função create(texto)
+✔ Criar a função create(texto) @done
   Essa função deve receber um texto como parâmetro e,
   com base nesse texto, criar um novo objeto tarefa
 
-☐ Adicionar uma tarefa ao array
+✔ Adicionar uma tarefa ao array @done
   Fazer com que a submissão do formulário acrescente uma tarefa
   ao array de tarefas e limpe o campo onde se digita o texto
 
