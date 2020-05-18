@@ -3,13 +3,13 @@ let tarefas = [
         id: 1,
         texto: 'Escovar os dentes',
         prioridade: 3,
-        feito: true
+        feito: false
     },
     {
         id: 2,
         texto: 'Gravar vídeos',
         prioridade: 1,
-        feito: true
+        feito: false
     },
     {
         id: 3,
@@ -25,20 +25,26 @@ let tarefas = [
     },
 ]
 
-const render = t => {
+const render = tarefas => {
     // Capturar o elemento que contém a lista de tarefas
     let table = document.getElementById('table');
     table.innerHTML = '';
 
     // Criando a lista de tarefas
-    for (const tarefa of t) {
+    for (const tarefa of tarefas) {
         
-        // Criar uma linha de tabela
+        // Criar a row (linha) da tabela
         let row = document.createElement('tr');
+        if (tarefa.feito) {
+            row.classList.add('done');
+        }
 
         // Criar o input checkbox
         let checkbox = document.createElement('input');
         checkbox.setAttribute('type', 'checkbox');
+        checkbox.checked = tarefa.feito;
+        checkbox.id = 'chk' + tarefa.id;
+        checkbox.addEventListener('click', onCheckClick);
 
         // Criar a célula que vai conter o checkbox
         let tdCheck = document.createElement('td');
@@ -53,10 +59,9 @@ const render = t => {
         row.appendChild(tdTexo);
 
         // Criar td de prioridade
+        let prioridades = {1: 'baixa', 2: 'média', 3: 'alta'};
         let tdPrioridade = document.createElement('td');
-        if (tarefa.prioridade == 3) tdPrioridade.innerText = '[alta]'
-        if (tarefa.prioridade == 2) tdPrioridade.innerText = '[média]'
-        if (tarefa.prioridade == 1) tdPrioridade.innerText = '[baixa]'
+        tdPrioridade.innerText = prioridades[tarefa.prioridade];
         row.appendChild(tdPrioridade);
 
         // Criar td de ações
@@ -64,21 +69,66 @@ const render = t => {
         let i = document.createElement('i');
         i.className = 'material-icons';
         i.innerText = 'delete';
+        i.addEventListener('click', onDeleteClick);
+        i.setAttribute('id', tarefa.id);
         tdAcoes.appendChild(i);
         row.appendChild(tdAcoes);
-
+        
         // Adicionar a linha à tabela
         table.appendChild(row);
     }
 }
 
+const onDeleteClick = e => {
+    console.log(e.target);
+    
+    // Capturando o id da tarefa a ser removida
+    let id = Number(e.target.id);
+
+    // Confirmar a exclusão
+    if(!window.confirm('Tem certeza que deseja excluir a tarefa?')) {
+        return; // abortando...
+    }
+
+    // Remover a tarefa do array 
+    remove(id);
+
+    // Renderizar a lista novamente
+    render(tarefas);
+}
+
+const onCheckClick = e => {
+    // Capturando o id da tarefa clicada
+    let id = Number(e.target.id.replace('chk', ''));
+    
+    // Levantar tarefa do id capturado
+    let tarefa = tarefas.find(t => t.id == id);
+    
+    // Alterar o campo feito
+    tarefa.feito = !tarefa.feito;
+
+    // Alterar a classe da tr que contepm o td que contém o checkbox;
+    e.target.parentNode.parentNode.classList.toggle('done');
+
+    console.log(tarefas);
+}
+
 const create = (texto, prioridade) => {
+    
+    // Determinando o novo id da tarefa
+    let id = tarefas.length == 0 ? 1 : tarefas[tarefas.length - 1].id + 1;
+    
+    // Retornando a tarefa
     return { 
-        id: tarefas[tarefas.length - 1].id + 1,
+        id,
         texto,
         prioridade,
         feito: false
     }
+}
+
+const remove = id => {
+    tarefas = tarefas.filter(t => t.id != id);
 }
 
 // Capturar form
